@@ -1,5 +1,5 @@
 name: dosbox
-version: "0.74-svn"
+version: "0.74-awe"
 summary: DOS emulator
 description: |
   DOSBox is a x86 emulator with Tandy/Hercules/
@@ -11,6 +11,12 @@ confinement: devmode
 base: core18
 
 parts:
+  hooks:
+    plugin: dump
+    source: bin
+    organize:
+      dosbox-wrapper: bin/dosbox-wrapper
+
   dosbox:
     plugin: autotools
     source-type: tar
@@ -76,7 +82,7 @@ parts:
 
 apps:
   dosbox:
-    command: dosbox
+    command: bin/dosbox-wrapper
     environment:
       "LD_LIBRARY_PATH": "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
       "DISABLE_WAYLAND": "1"
